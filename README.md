@@ -1,4 +1,4 @@
-# sm
+# medium
 
 ## Project setup
 ```
