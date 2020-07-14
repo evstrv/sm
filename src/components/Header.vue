@@ -1,7 +1,7 @@
 <template>
     <header>
         <div class="logo">
-            <img :src="logoImg">
+            <a href="/"><img :src="logoImg"></a>
         </div>
     </header>
 </template>
@@ -35,8 +35,13 @@
                 display: flex;
                 align-items: center;
                 
-                img {
+                a {
                     width: 30px;
+                    height: 30px;
+
+                    img {
+                        width: inherit;
+                    }
                 }
             }
         }

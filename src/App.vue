@@ -22,7 +22,7 @@ export default {
 </script>
 
 <style>
-  @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300;400;700&display=swap');
 
   * {
     font-family: 'Roboto Condensed', sans-serif;
@@ -40,6 +40,6 @@ export default {
   }
 
   main {
-    min-height: calc(100vh - 43px - 46px);
+    min-height: calc(100vh - 45px - 46px);
   }
 </style>
