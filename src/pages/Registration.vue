@@ -6,29 +6,29 @@
             <form action="">
                 <label for="">
                     <span>Username</span>
-                    <input type="text">
+                    <input type="text" v-model="username">
                 </label>
                 <label for="">
                     <span>Account name <span>*</span></span>
-                    <input type="text">
+                    <input type="text" v-model="account">
                 </label>
                 <label for="">
                     <span>Email address <span>*</span></span>
-                    <input type="email">
+                    <input type="email" v-model="email">
                 </label>
                 <label for="">
                     <span>Birthday</span>
-                    <input type="date">
+                    <input type="date" v-model="birthday">
                 </label>
                 <label for="">
                     <span>Password <span>*</span></span>
-                    <input type="password">
+                    <input type="password" v-model="password">
                 </label>
                 <label for="">
                     <span>Confirm password <span>*</span></span>
-                    <input type="password">
+                    <input type="password" v-model="confPass">
                 </label>
-                <button>Create account</button>
+                <button @click="submit">Create account</button>
             </form>
             <span>
                 By creating an account, you agree to the Terms of Service (that don't exist). 
@@ -42,7 +42,26 @@
 <script>
     import Vue from 'vue'
     export default Vue.extend({
-        name: 'Registration'
+        name: 'Registration',
+        data() {
+            return {
+                username: '',
+                account: '',
+                email: '',
+                birthday: '',
+                password: '',
+                confPass: ''
+            };
+        },
+        computed: {
+
+        },
+        methods: {
+
+        },
+        mounted() {
+
+        }
     })
 </script>
 

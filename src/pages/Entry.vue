@@ -5,13 +5,13 @@
             <form action="">
                 <label for="">
                     <span>Username</span>
-                    <input type="text">
+                    <input type="text" v-model="login">
                 </label>
                 <label for="">
                     <span>Password</span>
-                    <input type="password">
+                    <input type="password" v-model="password">
                 </label>
-                <button>Sign in</button>
+                <button @click="authorize">Sign in</button>
             </form>
         </div>
         <div class="create">
@@ -23,7 +23,22 @@
 <script>
     import Vue from 'vue'
     export default Vue.extend({
-        name: 'Entry'
+        name: 'Entry',
+        data() {
+            return {
+                login: '',
+                password: ''
+            };
+        },
+        computed: {
+
+        },
+        methods: {
+
+        },
+        mounted() {
+
+        }
     })
 </script>
 
