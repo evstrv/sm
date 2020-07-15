@@ -29,6 +29,7 @@
         align-items: center;
         box-sizing: border-box;
         background-color: white;
+        margin-bottom: 1rem;
 
         div {
             &.logo {

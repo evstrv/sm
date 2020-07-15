@@ -3,22 +3,33 @@
         <span>Join Medium</span>
         <h1>Create your account</h1>
         <div class="create">
+            <span class="success" v-if="successRegistration">Registration completed successfully!</span>
+            <div class="errors" v-show="isError">
+                <span class="error" v-show="isError && !username">The username field is incorrect!</span>
+                <span class="error" v-show="isError && !email">The email field is incorrect!</span>
+                <span class="error" v-show="isError && !password">The password field is incorrect!</span>
+                <span class="error" v-show="isError && (!confPass || !password || password !== confPass)">Password mismatch!</span>
+            </div>
             <form action="">
                 <label for="">
-                    <span>Username</span>
-                    <input type="text" v-model="username">
+                    <span>First name </span>
+                    <input type="text" v-model="firstName">
                 </label>
                 <label for="">
-                    <span>Account name <span>*</span></span>
-                    <input type="text" v-model="account">
-                </label>
-                <label for="">
-                    <span>Email address <span>*</span></span>
-                    <input type="email" v-model="email">
+                    <span>Last name </span>
+                    <input type="text" v-model="lastName">
                 </label>
                 <label for="">
                     <span>Birthday</span>
                     <input type="date" v-model="birthday">
+                </label>
+                <label for="">
+                    <span>Username <span>*</span></span>
+                    <input type="text" v-model="username">
+                </label>
+                <label for="">
+                    <span>Email address <span>*</span></span>
+                    <input type="email" v-model="email">
                 </label>
                 <label for="">
                     <span>Password <span>*</span></span>
@@ -30,7 +41,7 @@
                 </label>
                 <button @click="submit">Create account</button>
             </form>
-            <span>
+            <span class="terms">
                 By creating an account, you agree to the Terms of Service (that don't exist). 
                 For more information about Medium's privacy practices, see the Medium Privacy Statement (that doesn't exist). 
                 We'll occasionally send you account-related emails.
@@ -45,19 +56,64 @@
         name: 'Registration',
         data() {
             return {
-                username: '',
-                account: '',
-                email: '',
+                firstName: '',
+                lastName: '',
                 birthday: '',
+                username: '',
+                email: '',
                 password: '',
-                confPass: ''
+                confPass: '',
+                needCheck: false,
+                successRegistration: false
             };
         },
         computed: {
-
+            isError() {
+                if(this.needCheck) {
+                    return !(this.password === this.confPass && this.username && this.email);
+                }
+                return false;
+            }
         },
         methods: {
-
+            submit(event) {
+                event.preventDefault();
+                this.needCheck = true;
+                if(!this.isError) {
+                    fetch(
+                        '//localhost/medium/api/user/registration.php',
+                        {
+                            method: 'post',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                firstName: this.firstName,
+                                lastName: this.lastName,
+                                birthday: new Date(this.birthday).valueOf() / 1000,
+                                username: this.username,
+                                email: this.email,
+                                password: this.password
+                            })
+                        }
+                    ).then(res => res.json()).then(res => {
+                        console.log(res);   
+                        if(res && res.res) {
+                            this.firstName = '',
+                            this.lastName = '',
+                            this.birthday = '',
+                            this.username = '',
+                            this.email = '',
+                            this.password = '',
+                            this.confPass = '',
+                            this.needCheck = false,
+                            this.successRegistration = true
+                        }
+                    }).catch(err => {
+                        console.log(err);
+                    });
+                }
+            }
         },
         mounted() {
 
@@ -84,6 +140,7 @@
             font-size: 3rem;
             font-weight: 500;
             margin: 0;
+            text-align: center;
         }
 
         .create {
@@ -97,7 +154,7 @@
                     margin: 0 0 7px;
                     font-size: 14px;
 
-                    > span span  {
+                    > span > span  {
                         color: red;
                     }
 
@@ -141,8 +198,44 @@
                 }
             }
 
-            > span {
-                font-size: 12px;
+            span {
+                &.success {
+                    background-color: #e4ffe2;
+                    border: 1px solid #80f975;
+                    border-radius: 6px;
+                    width: 100%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    margin: 0 0 15px;
+                    padding: 10px 0;
+                    font-size: 13px;
+                }
+
+                &.terms {
+                    font-size: 12px;
+                }
+            }
+
+            .errors {
+                background-color: #ffeef0;
+                border: 1px solid #f97583;
+                border-radius: 6px;
+                margin: 0 0 15px;
+                padding: 10px;
+                
+                span {
+                    width: 100%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-size: 13px;
+                    text-align: center;
+
+                    &:not(:last-child) {
+                        padding-bottom: 10px;
+                    }
+                }
             }
         }
     }

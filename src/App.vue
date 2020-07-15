@@ -40,6 +40,6 @@ export default {
   }
 
   main {
-    min-height: calc(100vh - 45px - 46px);
+    min-height: calc(100vh - 45px - 46px - 2rem);
   }
 </style>

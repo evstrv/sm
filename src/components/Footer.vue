@@ -16,9 +16,9 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-top: auto;
         padding: 16px 0 8px;
         font-weight: 300;
         font-size: 1rem;
+        margin-top: 1rem;
     }
 </style>
