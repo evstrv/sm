@@ -109,7 +109,7 @@
                             this.needCheck = false,
                             this.successRegistration = true
                         }
-                        this.$router.push('/    ');
+                        this.$router.push('/');
                     }).catch(err => {
                         console.log(err);
                     });

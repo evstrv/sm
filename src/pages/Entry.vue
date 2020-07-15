@@ -2,9 +2,10 @@
     <div class="entry">
         <h1>Sign in to Medium</h1>
         <span class="success" v-if="isLogin">You have successfully authorized!</span>
+        <span class="error" v-if="loginError">User does not exist or fields is incorrect!</span>
         <div class="errors" v-show="isError">
-            <span class="error" v-show="isError && !username">The username field is incorrect!</span>
-            <span class="error" v-show="isError && !password">The password field is incorrect!</span>
+            <span v-show="isError && !username">The username field is incorrect!</span>
+            <span v-show="isError && !password">The password field is incorrect!</span>
         </div>
         <div class="login">
             <form action="">
@@ -36,7 +37,8 @@
                 username: '',
                 password: '',
                 isLogin: isLogin,
-                needCheck: false
+                needCheck: false,
+                loginError: false
             };
         },
         computed: {
@@ -65,10 +67,14 @@
                             })
                         }
                     ).then(res => res.json()).then(res => {
-                        this.isLogin = true;
-                        localStorage.setItem('id', res.userId);
-                        localStorage.setItem('username', this.username);
-                        this.$router.push('/home');
+                        if(res.res == true) {
+                            this.isLogin = true;
+                            localStorage.setItem('id', res.userId);
+                            localStorage.setItem('username', this.username);
+                            this.$router.push('/home');
+                        } else {
+                            this.loginError = true;
+                        }
                     });
                 }
             }
@@ -96,6 +102,17 @@
             &.success {
                 background-color: #e4ffe2;
                 border: 1px solid #80f975;
+                border-radius: 6px;
+                width: 18%;
+                text-align: center;
+                margin: 0 0 15px;
+                padding: 10px 20px;
+                font-size: 13px;
+            }
+
+            &.error {
+                background-color: #ffeef0;
+                border: 1px solid #f97583;
                 border-radius: 6px;
                 width: 18%;
                 text-align: center;
@@ -198,10 +215,7 @@
                 align-items: center;
                 font-size: 13px;
                 text-align: center;
-
-                &:not(:last-child) {
-                    padding-bottom: 10px;
-                }
+                padding: 5px 0;
             }
         }
     }
