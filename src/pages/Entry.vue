@@ -17,7 +17,6 @@
                     <input type="password" v-model="password">
                 </label>
                 <button @click="authorize">Sign in</button>
-                <button style="margin-top: 10px" @click="logout" v-if="isLogin">Logout</button>
             </form>
         </div>
         <div class="create">
@@ -69,16 +68,9 @@
                         this.isLogin = true;
                         localStorage.setItem('id', res.userId);
                         localStorage.setItem('username', this.usermame);
+                        this.$router.push('/home');
                     });
                 }
-            },
-            logout() {
-                localStorage.setItem('id', '');
-                localStorage.setItem('username', '');
-                this.isLogin = false;
-                this.username = '';
-                this.password = '';
-                this.needCheck = false;
             }
         },
         mounted() {
