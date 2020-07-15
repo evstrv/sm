@@ -78,7 +78,7 @@
                 this.isLogin = false;
                 this.username = '';
                 this.password = '';
-                // this.needCheck = false;
+                this.needCheck = false;
             }
         },
         mounted() {
