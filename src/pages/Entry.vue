@@ -67,7 +67,7 @@
                     ).then(res => res.json()).then(res => {
                         this.isLogin = true;
                         localStorage.setItem('id', res.userId);
-                        localStorage.setItem('username', this.usermame);
+                        localStorage.setItem('username', this.username);
                         this.$router.push('/home');
                     });
                 }

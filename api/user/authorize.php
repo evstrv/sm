@@ -25,6 +25,4 @@
         die(json_encode(['res' => false]));
     } 
 
-
-
     die();
