@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <Header/>
+      <Menu/>
       <main>
         <router-view></router-view>
       </main>
@@ -10,12 +11,14 @@
 
 <script>
 import Header from './components/Header.vue'
+import Menu from './components/Menu.vue'
 import Footer from './components/Footer.vue'
 
 export default {
   name: 'App',
   components: {
     Header,
+    Menu,
     Footer
   }
 }
