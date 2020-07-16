@@ -71,7 +71,7 @@
                             this.isLogin = true;
                             localStorage.setItem('id', res.userId);
                             localStorage.setItem('username', this.username);
-                            this.$router.push('/home');
+                            this.$router.push('/profile');
                         } else {
                             this.loginError = true;
                         }

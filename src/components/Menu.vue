@@ -1,8 +1,11 @@
 <template>
     <div class="menu">
         <nav>
-            <button class="menu-btn" @click="toProfile"><img src="../assets/user.png" alt="Profile"></button>
-            <button class="logout" @click="logout"><img src="../assets/logout.png" alt="Logout"></button>
+            <button @click="toHome"><img src="../assets/home.png" alt="Home"></button>
+            <button><img src="../assets/messages.png" alt="Messages"></button>
+            <button><img src="../assets/followers.png" alt="Followers"></button>
+            <button @click="toProfile"><img src="../assets/user.png" alt="Profile"></button>
+            <button @click="logout"><img src="../assets/logout.png" alt="Logout"></button>
         </nav>
     </div>
 </template>
@@ -25,6 +28,9 @@
                 this.isLogin = false;
                 this.$router.push('/');
             },
+            toHome() {
+                this.$router.push('/home');
+            },
             toProfile() {
                 this.$router.push('/profile');
             }
@@ -39,66 +45,38 @@
 
         nav {
             width: 55px;
-            border-radius: 20px;
-            box-shadow: 0 0 4px 0 black;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
 
             button {
+                width: 45px;
+                height: 45px;
+                border: none;
+                border-radius: 50%;
+                background-color: #fff;
+                transition: .3s;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin: 10px 0;
+                transition: .3s;
+
+                &:hover {
+                    transition: .3s;
+                    background-color: rgba(0, 0, 0, .05);
+                }
+
+                &:focus {
+                    outline: none;
+                    transition: box-shadow .3s;
+                    box-shadow: 0px 0px 4px 1px #5aa0f1;
+                }
+
                 img {
-                    width: 20px;
-                    height: 20px;
-                }
-
-                &.logout {
-                    width: 40px;
-                    height: 40px;
-                    border: none;
-                    border-radius: 50%;
-                    transition: .3s;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    margin: 10px 0;
-                    background-color: #1074e7;
-
-                    &:hover {
-                        transition: .3s;
-                        background-color: #0f63c4;
-                    }
-
-                    &:focus {
-                        outline: none;
-                        transition: box-shadow .3s;
-                        box-shadow: 0px 0px 4px 2px #5aa0f1;
-                    }
-                }
-
-                &.menu-btn {
-                    width: 40px;
-                    height: 40px;
-                    border: none;
-                    border-radius: 50%;
-                    transition: .3s;
-                    background-color: white;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    margin: 10px 0;
-                    box-shadow: 0px 0px 4px 0px black;
-
-                    &:hover {
-                        transition: .3s;
-                        background-color: rgba(0, 0, 0, .05);
-                    }
-
-                    &:focus {
-                        outline: none;
-                        transition: box-shadow .3s;
-                        box-shadow: 0px 0px 4px 2px #5aa0f1;
-                    }
+                    width: 25px;
+                    height: 25px;
                 }
             }
         }
