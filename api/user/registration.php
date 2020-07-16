@@ -13,8 +13,15 @@
             $item = htmlspecialchars($item);
         }
 
-        $query = "INSERT INTO users(" . implode(',', array_keys($data)) . ") VALUES('" . implode("','", array_values($data)) . "')";
-        $res = mysqli_query($link, $query);
+        $query = "select username from users where username=\"{$data['username']}\"";
+        $resDb = mysqli_query($link, $query);
+
+        if($username = mysqli_fetch_assoc($resDb)) {
+            die(json_encode(['res' => false]));
+        } else {
+            $query = "INSERT INTO users(" . implode(',', array_keys($data)) . ") VALUES('" . implode("','", array_values($data)) . "')";
+            $res = mysqli_query($link, $query);
+        }
 
         mysqli_close($link);
         die(json_encode(['res' => $res]));

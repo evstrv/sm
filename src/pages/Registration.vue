@@ -4,11 +4,12 @@
         <h1>Create your account</h1>
         <div class="create">
             <span class="success" v-if="successRegistration">Registration completed successfully!</span>
-            <div class="errors" v-show="isError">
-                <span class="error" v-show="isError && !username">The username field is incorrect!</span>
-                <span class="error" v-show="isError && !email">The email field is incorrect!</span>
-                <span class="error" v-show="isError && !password">The password field is incorrect!</span>
-                <span class="error" v-show="isError && (!confPass || !password || password !== confPass)">Password mismatch!</span>
+            <div class="errors" v-show="isError || userExist">
+                <span v-show="isError && !username">The username field is incorrect!</span>
+                <span v-show="userExist">Such a user exist!</span>
+                <span v-show="isError && !email">The email field is incorrect!</span>
+                <span v-show="isError && !password">The password field is incorrect!</span>
+                <span v-show="isError && (!confPass || !password || password !== confPass)">Password mismatch!</span>
             </div>
             <form action="">
                 <label for="">
@@ -64,7 +65,8 @@
                 password: '',
                 confPass: '',
                 needCheck: false,
-                successRegistration: false
+                successRegistration: false,
+                userExist: false
             };
         },
         computed: {
@@ -107,9 +109,12 @@
                             this.password = '',
                             this.confPass = '',
                             this.needCheck = false,
-                            this.successRegistration = true
+                            this.successRegistration = true;
+                            this.$router.push('/');
+                        } 
+                        if(res.res == false) {
+                            this.userExist = true;
                         }
-                        this.$router.push('/');
                     }).catch(err => {
                         console.log(err);
                     });
@@ -225,17 +230,14 @@
                 margin: 0 0 15px;
                 padding: 10px;
                 
-                span {
+                > span {
                     width: 100%;
                     display: flex;
                     justify-content: center;
                     align-items: center;
                     font-size: 13px;
                     text-align: center;
-
-                    &:not(:last-child) {
-                        padding-bottom: 10px;
-                    }
+                    padding: 5px 0;
                 }
             }
         }
