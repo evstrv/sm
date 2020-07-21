@@ -83,6 +83,33 @@
                     });
                 }
             }
+        },
+        mounted() {
+            fetch(
+                '//localhost/medium/api/user/user.php?id='+localStorage.getItem('id'), 
+                {
+                    method: 'get',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+            ).then(res => res.json()).then(res => {
+                console.log(res);
+
+                const date = new Date(+res.user.birthday * 1000);
+                let strDate = date.getFullYear() + '-';
+                const month = '' + date.getMonth();
+                const day = '' + date.getDate(); 
+
+                strDate += (month.length < 2 ? '0' + month : month ) + '-';
+                strDate += (day.length < 2 ? '0' + day : day );
+
+                this.firstName = res.user.firstName;
+                this.lastName = res.user.lastName;
+                this.birthday = strDate;
+                this.hometown = res.user.hometown;
+                this.language = res.user.language;
+            });
         }
     }
 </script>

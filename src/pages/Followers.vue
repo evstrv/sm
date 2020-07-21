@@ -12,9 +12,10 @@
                     <img :src="item.avatar || noImage" :alt="item.username">
                 </div>
                 <div class="info">
-                    <div class="name">{{ item.firstName }} {{item.lastName}}<span v-if="item.id === userId">It's you</span></div>
+                    <div class="name" @click="$router.push(`/users/${item.id}`)">{{ item.firstName }} {{item.lastName}}<span v-if="item.id === userId">It's you</span></div>
                     <div class="add" v-if="item.id !== userId">
-                        <button>Follow</button>
+                        <button @click="submitRequestFriend(item.id)" v-if="!requests[item.id]">Follow</button>
+                        <button v-else-if="requests[item.id]" @click="removeRequest(requests[item.id], item.id)">Unfollow</button>
                     </div>
                 </div>
             </div>
@@ -30,7 +31,8 @@
                 search: '',
                 users: [],
                 noImage: '//localhost/medium/src/assets/user.png',
-                userId: localStorage.getItem('id')
+                userId: localStorage.getItem('id'),
+                requests: {}
             }
         },
         methods: {
@@ -51,6 +53,44 @@
                     this.users = res.users || [];
                     this.search = '';
                 });
+            },
+            submitRequestFriend(friendId){
+                fetch(
+                    '//192.168.64.3/api/notification.php',
+                    {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        method: 'post',
+                        body: JSON.stringify({
+                            userId: this.userId,
+                            otherId: friendId,
+                            type: 'ADD_FRIEND'
+                        })
+                    }
+                ).then(res => res.json()).then(res => {
+                    // console.log(res);
+                    const requests = {...this.requests};
+                    requests[friendId] = res.id;
+                    this.requests = {...requests};
+                });  
+            },
+            removeRequest(notificationId, friendId){
+                fetch(
+                    `//192.168.64.3/api/notification.php?id=${notificationId}`,
+                    {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        method: 'delete'
+                    }
+                ).then(res => res.json()).then(res => {
+                    if(res.res){
+                        const requests = {...this.requests};
+                        delete requests[friendId];
+                        this.requests = {...requests};
+                    }
+                });
             }
         },
         mounted() {
@@ -58,12 +98,13 @@
                 '//localhost/medium/api/users/followers.php',
                 {
                     headers: {
-                        'Content-Type': 'application0/json'
+                        'Content-Type': 'application/json'
                     }
                 }
             ).then(res => res.json()).then(res => {
                 console.log(res);
                 this.users = res.users || [];
+                this.requests = res.requests || {};
             });
         }
     }

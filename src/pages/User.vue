@@ -1,30 +1,27 @@
 <template>
-    <div class="profile">
+    <div class="user">
         <div class="column-1">
             <div class="avatar">
                 <label>
-                    <img :src="avatar" :alt="name">
-                    <span>Upload</span>
-                    <input type="file" @change="upload">
+                    <img :src="user.avatar" :alt="user.username">
                 </label>
-                <button @click="editProfile">Edit</button>
             </div>
         </div>
         <div class="column-2">
             <div class="about">
-                <h1>{{ firstName }} {{ lastName }}</h1>
+                <h1>{{ user.firstName }} {{ user.lastName }}</h1>
                 <div>
                     <div>
                         <h3>Birthday:</h3>
-                        <span>{{ birthday }}</span>
+                        <span>{{ this.birthday }}</span>
                     </div>
-                    <div v-show="this.hometown">
+                    <div v-show="user.hometown">
                         <h3>Hometown:</h3>
-                        <span>{{ hometown }}</span>
+                        <span>{{ user.hometown }}</span>
                     </div>
-                    <div v-show="this.language">
+                    <div v-show="user.language">
                         <h3>Language:</h3>
-                        <span>{{ language }}</span>
+                        <span>{{ user.language }}</span>
                     </div>
                 </div>
             </div>
@@ -34,88 +31,39 @@
 
 <script>
     export default {
-        name: 'Profile',
+        name: 'User',
         data() {
             return {
-                firstName: '',
-                lastName: '',
+                user: {},
                 birthday: '',
-                username: '',
-                email: '',
-                avatar: '',
-                hometown: '',
-                language: '',
-                isEdit: false,
-                needCheck: false
-            }
-        },
-        computed: {
-            isError() {
-                if(this.needCheck) {
-                    return true;
-                }
-                return false;   
-            }
-        },
-        methods: {
-            upload(event) {
-                console.log(event);
-                const data = new FormData();
-                data.append('file', event.target.files[0]);
-                data.append('userId', localStorage.getItem('id'));
-
-                fetch(
-                    '//localhost/medium/api/user/user.php',
-                    {
-                        method: 'post',
-                        body: data
-                    }
-                ).then(res => res.json()).then(res => {
-                    if(res.res) {
-                        this.avatar = res.src;
-                        location.reload(true);
-                    }
-                });
-            },
-            editProfile() {
-                if(this.isEdit === false) {
-                    this.isEdit = true;
-                    this.$router.push('/edit');
-                }
+                noImage: require('../assets/user.png')
             }
         },
         mounted() {
             fetch(
-                '//localhost/medium/api/user/user.php?id='+localStorage.getItem('id'), 
+                `//localhost/medium/api/user/user.php?id=${this.$route.params.id}`,
                 {
-                    method: 'get',
                     headers: {
                         'Content-Type': 'application/json'
                     }
                 }
             ).then(res => res.json()).then(res => {
-                console.log(res);
+                this.user = res.user;
 
                 const date = new Date(+res.user.birthday * 1000);
                 const month = '' + date.getMonth();
                 const day = '' + date.getDate();
                 let strDate = (day.length < 2 ? '0' + day : day) + '.' + (month.length < 2 ? '0' + month : month) + '.' + date.getFullYear();
-
-                this.firstName = res.user.firstName;
-                this.lastName = res.user.lastName;
+                
                 this.birthday = strDate;
-                this.hometown = res.user.hometown;
-                this.language = res.user.language;
-                this.username = res.user.username;
-                this.email = res.user.email;
-                this.avatar = res.user.avatar || '//localhost/medium/src/assets/user.png';
+                console.log(this.user);
             });
         }
     }
 </script>
 
 <style lang="scss" scoped>
-    .profile {
+    .user {
         width: 70%;
         margin: 0 auto;
         display: flex;
@@ -154,65 +102,6 @@
                         width: 100%;
                         height: 100%;
                         object-fit: cover;
-                    }
-
-                    span {
-                        display: flex;
-                        opacity: 0;
-                        position: absolute;
-                        width: 100%;
-                        height: 100%;
-                        align-items: center;
-                        justify-content: center;
-                        background-color: rgba($color: #0f63c4, $alpha: .5);
-                        font-size: 1.1rem;
-                        transition: .5s;
-                        color: white;
-                        font-weight: 600;
-                        border-radius: 4px;
-                        left: 0;
-                        top: 0;
-                    }
-                                
-                    input {
-                        display: none;
-                    }
-
-                    &:hover {
-                        cursor: pointer;
-
-                        span {
-                            opacity: 1;
-                            transition: .5s;
-                        }
-                    }
-                }
-
-                button {
-                    padding: .3rem 2.5rem;
-                    margin-top: 1rem;
-                    border: none;
-                    border-radius: 6px;
-                    font-size: 1rem;
-                    background-color: #1074e7;
-                    color: white;
-                    font-weight: 500;
-                    line-height: 20px;
-                    transition: .3s;
-
-                    &:hover {
-                        transition: .3s;
-                        background-color: #0f63c4;
-                    }
-
-                    &:active {
-                        outline: none;
-                        transition: box-shadow .15s;
-                        box-shadow: 0px 0px 4px 2px #5aa0f1;
-                    }
-
-                    &:focus {
-                        outline: none;
                     }
                 }
             }
