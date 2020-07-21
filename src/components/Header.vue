@@ -6,16 +6,15 @@
     </header>
 </template>
 
-<script lang="ts">
-    import Vue from 'vue'
-    export default Vue.extend({
+<script>
+    export default {
         name: 'Header',
         data() {
             return {
                 logoImg: require('../assets/medium.png')
             };
         }
-    })
+    }
 </script>
 
 <style lang="scss" scoped>

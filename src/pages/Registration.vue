@@ -5,6 +5,9 @@
         <div class="create">
             <span class="success" v-if="successRegistration">Registration completed successfully!</span>
             <div class="errors" v-show="isError || userExist">
+                <span v-show="isError && !firstName">The first name field is incorrect!</span>
+                <span v-show="isError && !lastName">The last name field is incorrect!</span>
+                <span v-show="isError && !birthday">The birthday field is incorrect!</span>
                 <span v-show="isError && !username">The username field is incorrect!</span>
                 <span v-show="userExist">Such a user exist!</span>
                 <span v-show="isError && !email">The email field is incorrect!</span>
@@ -13,15 +16,15 @@
             </div>
             <form action="">
                 <label for="">
-                    <span>First name </span>
+                    <span>First name <span>*</span></span>
                     <input type="text" v-model="firstName">
                 </label>
                 <label for="">
-                    <span>Last name </span>
+                    <span>Last name <span>*</span></span>
                     <input type="text" v-model="lastName">
                 </label>
                 <label for="">
-                    <span>Birthday</span>
+                    <span>Birthday <span>*</span></span>
                     <input type="date" v-model="birthday">
                 </label>
                 <label for="">
@@ -52,8 +55,7 @@
 </template>
 
 <script>
-    import Vue from 'vue'
-    export default Vue.extend({
+    export default {
         name: 'Registration',
         data() {
             return {
@@ -72,7 +74,7 @@
         computed: {
             isError() {
                 if(this.needCheck) {
-                    return !(this.password === this.confPass && this.username && this.email);
+                    return !(this.password === this.confPass && this.firstName && this.lastName && this.birthday && this.username && this.email);
                 }
                 return false;
             }
@@ -120,11 +122,8 @@
                     });
                 }
             }
-        },
-        mounted() {
-
         }
-    })
+    }
 </script>
 
 <style lang="scss" scoped>
@@ -144,7 +143,7 @@
 
         h1 {
             font-size: 3rem;
-            font-weight: 500;
+            font-weight: 300;
             margin: 0;
             text-align: center;
         }
@@ -196,10 +195,14 @@
                         background-color: #0f63c4;
                     }
 
+                    &:active {
+                        outline: none;
+                        transition: box-shadow .15s;
+                        box-shadow: 0px 0px 4px 2px #5aa0f1;
+                    }
+
                     &:focus {
                         outline: none;
-                        transition: .3s;
-                        box-shadow: 0px 0px 4px 2px #5aa0f1;
                     }
                 }
             }

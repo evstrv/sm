@@ -27,8 +27,7 @@
 </template>
 
 <script>
-    import Vue from 'vue'
-    export default Vue.extend({
+    export default {
         name: 'Entry',
         data() {
             const isLogin = localStorage.getItem('id') && localStorage.getItem('username');
@@ -78,11 +77,8 @@
                     });
                 }
             }
-        },
-        mounted() {
-
         }
-    })
+    }
 </script>
 
 <style lang="scss" scoped>
@@ -167,10 +163,14 @@
                         background-color: #0f63c4;
                     }
 
+                    &:active {
+                        outline: none;
+                        transition: box-shadow .15s;
+                        box-shadow: 0px 0px 4px 2px #5aa0f1;
+                    }
+
                     &:focus {
                         outline: none;
-                        transition: box-shadow .3s;
-                        box-shadow: 0px 0px 4px 2px #5aa0f1;
                     }
                 }
             }

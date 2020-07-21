@@ -5,14 +5,14 @@
             <button><img src="../assets/messages.png" alt="Messages"></button>
             <button><img src="../assets/followers.png" alt="Followers"></button>
             <button @click="toProfile"><img src="../assets/user.png" alt="Profile"></button>
+            <button><img src="../assets/notice.png" alt="Notice"></button>
             <button @click="logout"><img src="../assets/logout.png" alt="Logout"></button>
         </nav>
     </div>
 </template>
 
 <script>
-    import Vue from 'vue'
-    export default Vue.extend({
+    export default {
         name: 'Menu',
         data() {
             const isLogin = localStorage.getItem('id') && localStorage.getItem('login');
@@ -35,16 +35,16 @@
                 this.$router.push('/profile');
             }
         }
-    })
+    }
 </script>
 
 <style lang="scss" scoped>
     .menu{
-        padding: 1rem 0 0 2rem;
+        padding: 0 2rem;
         position: absolute;
+        width: 55px;
 
         nav {
-            width: 55px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -68,10 +68,14 @@
                     background-color: rgba(0, 0, 0, .05);
                 }
 
+                &:active {
+                    outline: none;
+                    transition: box-shadow .15s;
+                    box-shadow: 0px 0px 4px 1px #5aa0f1;
+                }
+
                 &:focus {
                     outline: none;
-                    transition: box-shadow .3s;
-                    box-shadow: 0px 0px 4px 1px #5aa0f1;
                 }
 
                 img {
