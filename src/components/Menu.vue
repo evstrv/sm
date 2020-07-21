@@ -3,7 +3,7 @@
         <nav>
             <button @click="toHome"><img src="../assets/home.png" alt="Home"></button>
             <button><img src="../assets/messages.png" alt="Messages"></button>
-            <button><img src="../assets/followers.png" alt="Followers"></button>
+            <button @click="toFollowers"><img src="../assets/followers.png" alt="Followers"></button>
             <button @click="toProfile"><img src="../assets/user.png" alt="Profile"></button>
             <button><img src="../assets/notice.png" alt="Notice"></button>
             <button @click="logout"><img src="../assets/logout.png" alt="Logout"></button>
@@ -33,6 +33,9 @@
             },
             toProfile() {
                 this.$router.push('/profile');
+            },
+            toFollowers() {
+                this.$router.push('/followers');
             }
         }
     }

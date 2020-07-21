@@ -2,9 +2,9 @@
   <div id="app">
     <Header/>
       <Menu/>
-      <main>
-        <router-view></router-view>
-      </main>
+        <main>
+          <router-view></router-view>
+        </main>
     <Footer/>
   </div>
 </template>
@@ -20,6 +20,12 @@ export default {
     Header,
     Menu,
     Footer
+  },
+  data() {
+    
+  },
+  methods: {
+
   }
 }
 </script>
