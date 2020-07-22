@@ -25,7 +25,7 @@
 
 <script>
     export default {
-        name: 'Followers',
+        name: 'Users',
         data() {
             return {
                 search: '',
@@ -56,12 +56,12 @@
             },
             submitRequestFriend(friendId){
                 fetch(
-                    '//192.168.64.3/api/notification.php',
+                    '//localhost/medium/api/notification.php',
                     {
+                        method: 'post',
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        method: 'post',
                         body: JSON.stringify({
                             userId: this.userId,
                             otherId: friendId,
@@ -69,7 +69,6 @@
                         })
                     }
                 ).then(res => res.json()).then(res => {
-                    // console.log(res);
                     const requests = {...this.requests};
                     requests[friendId] = res.id;
                     this.requests = {...requests};
@@ -77,12 +76,12 @@
             },
             removeRequest(notificationId, friendId){
                 fetch(
-                    `//192.168.64.3/api/notification.php?id=${notificationId}`,
+                    `//localhost/medium/api/notification.php?id=${notificationId}`,
                     {
+                        method: 'delete',
                         headers: {
                             'Content-Type': 'application/json'
-                        },
-                        method: 'delete'
+                        }
                     }
                 ).then(res => res.json()).then(res => {
                     if(res.res){
@@ -95,7 +94,7 @@
         },
         mounted() {
             fetch(
-                '//localhost/medium/api/users/followers.php',
+                '//localhost/medium/api/users/users.php',
                 {
                     headers: {
                         'Content-Type': 'application/json'
@@ -202,7 +201,7 @@
                         max-width: 150px;
                         height: 100%;
                         max-height: 150px;
-                        border-radius: 4px;
+                        border-radius:50%;
                         object-fit: cover;
                     }
                 }
@@ -219,6 +218,10 @@
                         margin-bottom: 1rem;
                         padding-bottom: 1rem;
                         border-bottom: 1px solid lightgrey;
+                        
+                        &:hover {
+                            cursor: pointer;
+                        }
                         
                         span {
                             color: green;

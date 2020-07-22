@@ -5,7 +5,7 @@
             <button><img src="../assets/messages.png" alt="Messages"></button>
             <button @click="toFollowers"><img src="../assets/followers.png" alt="Followers"></button>
             <button @click="toProfile"><img src="../assets/user.png" alt="Profile"></button>
-            <button><img src="../assets/notice.png" alt="Notice"></button>
+            <button @click="toNotifications"><img src="../assets/notice.png" alt="Notice"></button>
             <button @click="logout"><img src="../assets/logout.png" alt="Logout"></button>
         </nav>
     </div>
@@ -15,7 +15,7 @@
     export default {
         name: 'Menu',
         data() {
-            const isLogin = localStorage.getItem('id') && localStorage.getItem('login');
+            const isLogin = localStorage.getItem('id') && localStorage.getItem('username');
 
             return {
                 isLogin: isLogin
@@ -35,8 +35,14 @@
                 this.$router.push('/profile');
             },
             toFollowers() {
-                this.$router.push('/followers');
+                this.$router.push('/users');
+            },
+            toNotifications() {
+                this.$router.push('/notifications');
             }
+        },
+        mounted() {
+            
         }
     }
 </script>

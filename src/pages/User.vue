@@ -51,7 +51,7 @@
                 this.user = res.user;
 
                 const date = new Date(+res.user.birthday * 1000);
-                const month = '' + date.getMonth();
+                const month = '' + (date.getMonth() + 1);
                 const day = '' + date.getDate();
                 let strDate = (day.length < 2 ? '0' + day : day) + '.' + (month.length < 2 ? '0' + month : month) + '.' + date.getFullYear();
                 

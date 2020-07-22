@@ -20,12 +20,6 @@ export default {
     Header,
     Menu,
     Footer
-  },
-  data() {
-    
-  },
-  methods: {
-
   }
 }
 </script>

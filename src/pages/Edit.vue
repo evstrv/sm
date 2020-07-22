@@ -98,7 +98,7 @@
 
                 const date = new Date(+res.user.birthday * 1000);
                 let strDate = date.getFullYear() + '-';
-                const month = '' + date.getMonth();
+                const month = '' + (date.getMonth() + 1);
                 const day = '' + date.getDate(); 
 
                 strDate += (month.length < 2 ? '0' + month : month ) + '-';
