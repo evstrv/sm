@@ -3,7 +3,7 @@
         <div class="column-1">
             <div class="avatar">
                 <label>
-                    <img :src="user.avatar" :alt="user.username">
+                    <img :src="user.avatar || noImage" :alt="user.username">
                 </label>
             </div>
         </div>
@@ -84,6 +84,7 @@
                 padding: 1rem;
                 margin-right: 1rem;
                 box-shadow: 0 0 4px 1px lightgrey;
+                margin-bottom: 1rem;
 
                 label {
                     width: auto;

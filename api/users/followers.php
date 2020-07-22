@@ -28,6 +28,8 @@
             }
         }
 
+        $query = "select * from followers";
+
         mysqli_close($link);
         die(json_encode(['res' => $res]));
     } 

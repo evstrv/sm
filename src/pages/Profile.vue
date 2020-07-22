@@ -3,7 +3,7 @@
         <div class="column-1">
             <div class="avatar">
                 <label>
-                    <img :src="avatar" :alt="name">
+                    <img :src="avatar" :alt="username">
                     <span>Upload</span>
                     <input type="file" @change="upload">
                 </label>
@@ -46,7 +46,9 @@
                 hometown: '',
                 language: '',
                 isEdit: false,
-                needCheck: false
+                needCheck: false,
+                noImage: '//localhost/medium/src/assets/user.png',
+                users: []
             }
         },
         computed: {
@@ -106,8 +108,6 @@
                 this.birthday = strDate;
                 this.hometown = res.user.hometown;
                 this.language = res.user.language;
-                this.username = res.user.username;
-                this.email = res.user.email;
                 this.avatar = res.user.avatar || '//localhost/medium/src/assets/user.png';
             });
         }
@@ -136,6 +136,7 @@
                 padding: 1rem;
                 margin-right: 1rem;
                 box-shadow: 0 0 4px 1px lightgrey;
+                margin-bottom: 1rem;
 
                 label {
                     width: auto;
