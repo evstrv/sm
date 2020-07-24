@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Июл 22 2020 г., 20:32
+-- Время создания: Июл 24 2020 г., 14:51
 -- Версия сервера: 10.4.10-MariaDB
 -- Версия PHP: 7.3.12
 
@@ -39,7 +39,13 @@ CREATE TABLE `followers` (
 --
 
 INSERT INTO `followers` (`id`, `user`, `friend`) VALUES
-(2, 18, 17);
+(9, 21, 22),
+(10, 21, 23),
+(11, 21, 25),
+(12, 21, 24),
+(13, 22, 23),
+(14, 22, 21),
+(15, 23, 21);
 
 -- --------------------------------------------------------
 
@@ -53,13 +59,6 @@ CREATE TABLE `notifications` (
   `userId` int(11) NOT NULL,
   `otherId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Дамп данных таблицы `notifications`
---
-
-INSERT INTO `notifications` (`id`, `type`, `userId`, `otherId`) VALUES
-(17, 'ADD_FRIEND', 15, 17);
 
 -- --------------------------------------------------------
 
@@ -85,10 +84,11 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `firstName`, `lastName`, `birthday`, `username`, `email`, `password`, `avatar`, `hometown`, `language`) VALUES
-(15, 'Stas', 'Stasovich', '882144000', 'user', 'user@medium.ru', '123', '//localhost/medium/uploads/avatar/useravatar.png', '', ''),
-(17, 'Victor', 'Evstratov', '928022400', 'admin', 'admin@medium.ru', '123', '//localhost/medium/uploads/avatar/adminavatar.png', 'Moscow', 'Russian'),
-(18, 'Vova', 'Vist', '-15190934400', 'vist', 'vist@solder.ru', '123', '//localhost/medium/uploads/avatar/vistavatar.png', NULL, NULL),
-(19, 'Oleg', 'Olek', '924134400', 'oleg', '123@mail.ru', '123', NULL, NULL, NULL);
+(21, 'Victor', 'Evstratov', '928022400', 'victor', 'victor@medium.ru', '123', '//localhost/medium/uploads/avatar/victoravatar.png', 'Moscow', 'Russian'),
+(22, 'Vova', 'Kurlichenko', '927244800', 'vova', 'vova@medium.ru', '123', NULL, 'Balashiha', 'Russian'),
+(23, 'Oleg', 'Utkin', '0', 'oleg', 'oleg@medium.ru', '123', NULL, NULL, NULL),
+(24, 'Misha', 'Tarakanov', '0', 'misha', 'misha@medium.ru', '123', NULL, NULL, NULL),
+(25, 'David', 'Martirosyan', '0', 'david', 'david@medium.ru', '123', NULL, NULL, NULL);
 
 --
 -- Индексы сохранённых таблиц
@@ -120,19 +120,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT для таблицы `followers`
 --
 ALTER TABLE `followers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT для таблицы `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
