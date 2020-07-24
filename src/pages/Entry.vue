@@ -37,7 +37,8 @@
                 password: '',
                 isLogin: isLogin,
                 needCheck: false,
-                loginError: false
+                loginError: false,
+                isShow: true
             };
         },
         computed: {
@@ -51,6 +52,7 @@
         methods: {
             authorize(event) {
                 event.preventDefault();
+                this.$root.$emit('emit', this.isShow);
                 this.needCheck = true;
                 if(!this.isError) {
                     fetch(

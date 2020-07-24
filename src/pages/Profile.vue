@@ -9,6 +9,17 @@
                 </label>
                 <button @click="editProfile">Edit</button>
             </div>
+            <div class="followers">
+                <span>Followers</span>
+                <div>
+                    <div class="item" v-for="(item, id) in users" :key="`user_item_${id}`">
+                        <div class="img">
+                            <img :src="item.avatar || noImage" alt=""/>
+                            <span>{{ item.firstName }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="column-2">
             <div class="about">
@@ -109,6 +120,19 @@
                 this.hometown = res.user.hometown;
                 this.language = res.user.language;
                 this.avatar = res.user.avatar || '//localhost/medium/src/assets/user.png';
+            });
+
+            fetch(
+                '//localhost/medium/api/user/followers.php?id='+localStorage.getItem('id'), 
+                {
+                    method: 'get',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+            ).then(res => res.json()).then(res => {
+                console.log(res);
+                this.users = res.users || [];
             });
         }
     }
@@ -217,6 +241,56 @@
                     }
                 }
             }
+
+            .followers {
+                height: auto;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                box-sizing: border-box;
+                border-radius: 4px;
+                padding: 1rem;
+                margin-right: 1rem;
+                box-shadow: 0 0 4px 1px lightgrey;
+
+                > span {
+                    font-size: 1rem;
+                    font-weight: 300;
+                    margin-bottom: 11px;
+                    padding-bottom: 10px;
+                    border-bottom: 1px solid lightgrey;
+                }
+
+                > div {
+                    display: flex;
+                    justify-content: space-evenly;
+                    align-items: center;
+                    flex-wrap: wrap;
+
+                    .item {
+                        margin: 5px;
+                        width: 25%;
+                        
+                        .img {
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+
+                            img {
+                                width: 50px;
+                                height: 50px;
+                                border-radius: 50%;
+                                object-fit: cover;
+                            }
+
+                            span {
+                                font-size: 1rem;
+                                font-weight: 300;
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         .column-2 {
@@ -268,69 +342,6 @@
                         span {
                             font-size: 1.1rem;
                             font-weight: 500;
-                        }
-                    }
-                }
-            }
-
-            .edit {
-                box-sizing: border-box;
-                border-radius: 4px;
-                padding: 1rem;
-                margin-right: 1rem;
-                margin-bottom: 1rem;
-                box-shadow: 0 0 4px 1px lightgrey;
-
-                form {
-                    label {
-                        display: flex;
-                        flex-direction: column;
-                        margin: 0 0 7px;
-                        font-size: 14px;
-
-                        > span > span  {
-                            color: red;
-                        }
-
-                        input {
-                            margin: 5px 0 15px;
-                            padding: 5px 12px;
-                            font-size: 14px;
-                            border: 1px solid rgba($color: gray, $alpha: .5);
-                            border-radius: 6px;
-
-                            &:focus {
-                                outline: none;
-                                box-shadow: 0px 0px 5px 1px rgba(141,174,240,1);
-                            }
-                        }
-                    }
-
-                    button {
-                        width: 100%;
-                        padding: 5px 16px;
-                        border: none;
-                        border-radius: 6px;
-                        font-size: 14px;
-                        background-color: #1074e7;
-                        color: white;
-                        font-weight: 500;
-                        line-height: 20px;
-                        transition: .3s;
-
-                        &:hover {
-                            transition: .3s;
-                            background-color: #0f63c4;
-                        }
-
-                        &:active {
-                            outline: none;
-                            transition: box-shadow .15s;
-                            box-shadow: 0px 0px 4px 2px #5aa0f1;
-                        }
-
-                        &:focus {
-                            outline: none;
                         }
                     }
                 }

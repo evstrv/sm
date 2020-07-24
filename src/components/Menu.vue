@@ -1,8 +1,7 @@
 <template>
     <div class="menu">
-        <nav>
+        <nav v-show="show">
             <button @click="toHome"><img src="../assets/home.png" alt="Home"></button>
-            <!-- <button><img src="../assets/messages.png" alt="Messages"></button> -->
             <button @click="toFollowers"><img src="../assets/followers.png" alt="Followers"></button>
             <button @click="toProfile"><img src="../assets/user.png" alt="Profile"></button>
             <button @click="toNotifications"><img src="../assets/notice.png" alt="Notice"></button>
@@ -18,7 +17,8 @@
             const isLogin = localStorage.getItem('id') && localStorage.getItem('username');
 
             return {
-                isLogin: isLogin
+                isLogin: isLogin,
+                show: false
             };
         },
         methods: {
@@ -27,6 +27,7 @@
                 localStorage.setItem('username', '');
                 this.isLogin = false;
                 this.$router.push('/');
+                this.show = false;
             },
             toHome() {
                 this.$router.push('/home');
@@ -42,7 +43,11 @@
             }
         },
         mounted() {
-            
+            this.$root.$on('emit', (isShow) => {
+                console.log(isShow, 'isShow menu.vue');
+                this.show = isShow;
+                console.log(this.show, 'this.show menu.vue');
+            });
         }
     }
 </script>

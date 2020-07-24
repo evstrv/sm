@@ -131,12 +131,12 @@
                     width: 100%;
                     padding: 5px 12px;
                     font-size: 14px;
-                    border: 1px solid rgba($color: gray, $alpha: .5);
+                    border: 1px solid lightgrey;
                     border-radius: 6px;
 
                     &:focus {
                         outline: none;
-                        box-shadow: 0px 0px 5px 1px rgba(141,174,240,1);
+                        box-shadow: 0px 0px 4px 1px rgba(141,174,240,1);
                     }
                 }
 
