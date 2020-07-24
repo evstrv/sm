@@ -6,7 +6,7 @@
                     <img :src="user.avatar || noImage" :alt="user.username">
                 </label>
             </div>
-            <div class="followers">
+            <div class="followers" v-show="show">
                 <span>Followers</span>
                 <div>
                     <div class="item" v-for="(item, id) in users" :key="`user_item_${id}`">
@@ -48,7 +48,8 @@
                 user: {},
                 birthday: '',
                 noImage: require('../assets/user.png'),
-                users: {}
+                users: {},
+                show: true
             }
         },
         mounted() {
@@ -79,8 +80,13 @@
                     }
                 }
             ).then(res => res.json()).then(res => {
-                console.log(res);
-                this.users = res.users || [];
+                console.log(res, 'followers');
+                if(res.users.length === 0) {
+                    console.log('пусто');
+                    this.show = false;
+                } else {
+                    this.users = res.users || [];
+                }
             });
         }
     }

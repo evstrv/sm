@@ -44,9 +44,7 @@
         },
         mounted() {
             this.$root.$on('emit', (isShow) => {
-                console.log(isShow, 'isShow menu.vue');
                 this.show = isShow;
-                console.log(this.show, 'this.show menu.vue');
             });
         }
     }
