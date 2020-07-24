@@ -3,17 +3,28 @@
         <div class="create">
             <form action="">
                 <div class="area">
-                    <textarea placeholder="What's new?"></textarea>
+                    <textarea placeholder="What's new?" v-model="textarea"></textarea>
                 </div>
                 <div class="functions">
-                    <!-- <label>
-                        <img :src="uploadImg" alt="uploadImg">
-                        <span></span>
-                        <input type="file" @change="upload">
-                    </label> -->
-                    <button>Send</button>
+                    <button @click="send">Send</button>
                 </div>
             </form>
+        </div>
+        <div class="posts">
+            <div>
+                <div class="item" v-for="(item, id) in posts" :key="`posts_item_${id}`">
+                    <div class="author">
+                        <div>
+                            <img :src="item.avatar || noImage" alt=""/>
+                            <span>{{ item.firstName }} {{ item.lastName }}</span>
+                        </div>
+                        <span>{{ item.time }}</span>
+                    </div>
+                    <div class="text">
+                        <span>{{ item.text }}</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -23,8 +34,58 @@
         name: 'Home',
         data() {
             return {
-                uploadImg: '//localhost/medium/src/assets/picture.png'
+                textarea: '',
+                userId: localStorage.getItem('id'),
+                noImage: '//localhost/medium/src/assets/user.png',
+                needCheck: false,
+                posts: []
             }
+        },
+        computed: {
+            isError() {
+                if(this.needCheck) {
+                    return !(this.textarea);
+                }
+                return false;
+            }
+        },
+        methods: {
+            send() {
+                this.needCheck = true;
+                if(!this.isError) {
+                    const body = {
+                        textarea: this.textarea,
+                        userId: this.userId
+                    };
+                    fetch(
+                        '//localhost/medium/api/posts.php',
+                        {
+                            method: 'put',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(body)
+                        }
+                    ).then(res => res.json()).then(res => {
+                        console.log(res);
+                        this.textarea = '';
+                    });
+                }
+            }
+        },
+        mounted() {
+            fetch(
+                '//localhost/medium/api/posts.php',
+                {
+                    method: 'get',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+            ).then(res => res.json()).then(res => {
+                console.log(res);
+                this.posts = res.posts || [];
+            });
         }
     }
 </script>
@@ -76,38 +137,6 @@
                     display: flex;
                     justify-content: space-between;
 
-                    label {
-                        display: flex;
-                        align-items: center;
-                        position: relative;
-
-                        img {
-                            width: 25px;
-                            height: 25px;
-                        }
-
-                        span {
-                            display: flex;
-                            opacity: 0;
-                            position: absolute;
-                            width: 100%;
-                            height: 100%;
-                            align-items: center;
-                            justify-content: center;
-                            border-radius: 4px;
-                            left: 0;
-                            top: 0;
-                        }
-
-                        input {
-                            display: none;
-                        }
-
-                        &:hover {
-                            cursor: pointer;
-                        }
-                    }
-
                     button {
                         padding: .2rem 2rem;
                         border: none;
@@ -135,6 +164,55 @@
                             outline: none;
                         }
                     }
+                }
+            }
+        }
+
+        .posts {
+            width: 100%;
+            height: auto;
+
+            .item {
+                width: 100%;
+                height: auto;
+                display: flex;
+                flex-direction: column;
+                box-sizing: border-box;
+                border-radius: 4px;
+                padding: 1rem;
+                box-shadow: 0 0 4px 1px lightgrey;
+                margin-bottom: 1rem;
+
+                .author {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 1rem;
+                    padding-bottom: 1rem;
+                    border-bottom: 1px solid lightgrey;
+
+                    div {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+
+                        img {
+                            width: 45px;
+                            height: 45px;
+                            object-fit: cover;
+                            border-radius: 50%;
+                        }
+
+                        span {
+                            margin-left: 10px;
+                            font-weight: 500;
+                            font-size: 1rem;
+                        }
+                    }
+                }
+
+                .text {
+                    
                 }
             }
         }
