@@ -6,6 +6,8 @@
         'medium'
     );
 
+    mysqli_set_charset($link, 'utf8');
+
     if($link !== false) {
         $data = [];
         
@@ -22,7 +24,7 @@
         }
             
         mysqli_close($link);
-        die(json_encode(['res' => true, 'userPosts' => $res]));  
+        die(json_encode(['res' => true, 'userPosts' => $res], JSON_INVALID_UTF8_IGNORE));  
     } 
 
     die();

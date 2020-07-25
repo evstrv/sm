@@ -6,6 +6,8 @@
         'medium'
     );
 
+    mysqli_set_charset($link, 'utf8');
+
     if($link !== false) {
         if($_SERVER['REQUEST_METHOD'] === 'PUT'){
             $data = json_decode(file_get_contents('php://input'), true);
@@ -30,7 +32,7 @@
             }
             
             mysqli_close($link);
-            die(json_encode(['res' => true, 'posts' => $res]));
+            die(json_encode(['res' => true, 'posts' => $res], JSON_INVALID_UTF8_IGNORE));
         }
     } 
 
