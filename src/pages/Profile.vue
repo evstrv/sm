@@ -328,6 +328,10 @@
                                     font-size: 1rem;
                                     font-weight: 300;
                                     color: black;
+
+                                    &:hover {
+                                        text-decoration: underline;
+                                    }
                                 }
                             }
                         }
