@@ -12,7 +12,7 @@
                     <img :src="item.avatar || noImage" :alt="item.username">
                 </div>
                 <div class="info">
-                    <div class="name" @click="$router.push(`/users/${item.id}`)">{{ item.firstName }} {{item.lastName}}<span v-if="item.id === userId">It's you</span></div>
+                    <div class="name" @click="$router.push(item.id === userId ? `/profile` : `/users/${item.id}`)">{{ item.firstName }} {{item.lastName}}<span v-if="item.id === userId">It's you</span></div>
                     <div class="add" v-if="item.id !== userId">
                         <button @click="submitRequestFriend(item.id)" v-if="!requests[item.id]">Follow</button>
                         <button v-else-if="requests[item.id]" @click="removeRequest(requests[item.id], item.id)">Unfollow</button>
@@ -197,10 +197,8 @@
                     justify-content: center;
 
                     img {
-                        width: auto;
-                        max-width: 150px;
+                        width: 100%;
                         height: 100%;
-                        max-height: 150px;
                         border-radius:50%;
                         object-fit: cover;
                     }

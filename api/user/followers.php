@@ -13,7 +13,7 @@
             $data[$key] = htmlspecialchars($item);
         }
 
-        $query = "select * from `users` u join `followers` f ON u.id = f.friend WHERE f.user={$data['id']}";
+        $query = "select u.* from `users` u join `followers` f ON u.id = f.friend WHERE f.user={$data['id']}";
         $resDb = mysqli_query($link, $query);
         $res = [];
 

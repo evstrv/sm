@@ -14,8 +14,10 @@
                 <div>
                     <div class="item" v-for="(item, id) in users" :key="`user_item_${id}`">
                         <div class="img">
-                            <img :src="item.avatar || noImage" alt=""/>
-                            <span>{{ item.firstName }}</span>
+                            <router-link :to="`/users/${item.id}`">
+                                <img :src="item.avatar || noImage" alt=""/>
+                                <span>{{ item.firstName }}</span>
+                            </router-link>
                         </div>
                     </div>
                 </div>
@@ -309,20 +311,24 @@
                         width: 25%;
                         
                         .img {
-                            display: flex;
-                            flex-direction: column;
-                            align-items: center;
+                            a {
+                                display: flex;
+                                flex-direction: column;
+                                align-items: center;
+                                text-decoration: none;
 
-                            img {
-                                width: 50px;
-                                height: 50px;
-                                border-radius: 50%;
-                                object-fit: cover;
-                            }
+                                img {
+                                    width: 50px;
+                                    height: 50px;
+                                    border-radius: 50%;
+                                    object-fit: cover;
+                                }
 
-                            span {
-                                font-size: 1rem;
-                                font-weight: 300;
+                                span {
+                                    font-size: 1rem;
+                                    font-weight: 300;
+                                    color: black;
+                                }
                             }
                         }
                     }

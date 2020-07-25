@@ -18,7 +18,7 @@
 
             return {
                 isLogin: isLogin,
-                show: false
+                show: isLogin
             };
         },
         methods: {
